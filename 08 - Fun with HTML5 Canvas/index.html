@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+  <script src="https://rawgit.com/pshihn/rough/master/dist/rough.js"></script>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+  let canvas = document.getElementById('draw')
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  let rc = rough.canvas(canvas);
+  let drawing = false;
+  let lastX = 0;
+  let lastY = 0;
+
+  function handleDraw(e) {
+    if(!drawing) return;
+    rc.line(lastX, lastY, e.offsetX, e.offsetY);
+    lastX = e.offsetX
+    lastY = e.offsetY
+
+  }
+
+  function startDraw(e) {
+    drawing = true
+    lastX = e.offsetX
+    lastY = e.offsetY
+  }
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', handleDraw);
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('mouseout', () => drawing = false);
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+
+</body>
+</html>
